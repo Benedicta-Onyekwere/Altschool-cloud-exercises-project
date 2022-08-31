@@ -5,7 +5,7 @@
 
 `root@ubuntu:~# uname -a`<br>
 
-![Screenshot](./C:\Github\Altschool-cloud-exercises-project\exercise 2\images\Exercise 2(8).png)<br><br>
+![Screenshot](C:\Github\Altschool-cloud-exercises-project\exercise 2\Exercise 2(8).png)<br><br>
 
 <li><b>The cal Command:</b> This command displays a well presented calendar. </li> 
 <br>
@@ -14,7 +14,7 @@
 
 `root@ubuntu:~# cal May 2019`<br>
 
-![Screenshot](C:\Github\Altschool-cloud-exercises-project\exercise 2\images\Exercise 2 (3).png)<br><br>
+![Screenshot](C:\Github\Altschool-cloud-exercises-project\exercise 2\Exercise 2 (3).png)<br><br>
 
 <li><b>The alias Command:</b> This is used to name a command one has created,more like a shortcut for commands a person frequently uses.</li><br>
 
