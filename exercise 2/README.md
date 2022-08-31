@@ -23,7 +23,8 @@
 
 `root@ubuntu:~# alias rmd="rm -r"`<br>
 
-![Exer2](https://user-images.githubusercontent.com/105982108/187772969-345e5c59-f0c3-4f2b-9e3d-1c28bf12141b.png)
+![Exer2](https://user-images.githubusercontent.com/105982108/187789024-91b2bf71-2fa1-4ec8-8cd2-f39c391a7b1c.png)
+
 
 
 <li><b>The whereis Command:</b> This outputs the exact location of any command that one types in after the whereis command.</li><br>
