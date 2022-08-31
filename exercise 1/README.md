@@ -11,7 +11,7 @@ I started this exercise by first downloading Oracle Virtual Machine Virtual Box,
 <li>Then i configured the network interface by using the command 'ifconfig' which gave me the results that is shown in the attached image.</li>
 
 </ol>
-![Screenshot](C:\Github\Altschool-cloud-exercises-project\images)
+
 
 
 
