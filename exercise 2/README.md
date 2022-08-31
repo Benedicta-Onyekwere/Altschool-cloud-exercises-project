@@ -5,7 +5,8 @@
 
 `root@ubuntu:~# uname -a`<br>
 
-![Exercise 2(8)](https://user-images.githubusercontent.com/105982108/187775561-0cb9cc8d-3cc3-4735-a00b-ff966b4ca7e1.png)
+![Exercise 2(8)](https://user-images.githubusercontent.com/105982108/187778733-4393ea5a-f35e-4742-bf8d-d21cbbef18c8.png)
+
 
 
 <li><b>The cal Command:</b> This command displays a well presented calendar. </li> 
