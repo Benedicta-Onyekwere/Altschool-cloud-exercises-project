@@ -1,8 +1,8 @@
 # Altschool-cloud-exercises-project    
 ## INSTALLATION OF PHP 7.4 ON MY LOCAL LINUX MACHINE USING THE ppa:ondrej/php package repo.
-I did the installation using th following steps:
+I did the installation using the following steps:
 <ol>
-<li>I ran the following command to update apt-get itself, which ensures that i have access to the latest versions of anything i want to install:
+<li>I ran the following command to update apt-get, which ensures that i have access to the latest versions of anything i want to install:
 
 `sudo apt-get update`
 </li>
