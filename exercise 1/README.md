@@ -10,7 +10,9 @@ I started this exercise by first downloading Oracle Virtual Machine Virtual Box,
 <li>Then i installed net tools in order for ifconfig(which is a command used to configure a network interface) to work.</li><br>
 <li>Then i configured the network interface by using the command 'ifconfig' which gave me the results that is shown in the attached image.</li><br>
 
-![Screenshot](C:\Github\Altschool-cloud-exercises-project\exercise 1\exer 1 (2).png)
+![exer 1 (2)](https://user-images.githubusercontent.com/105982108/187850535-d6a0c35f-33ab-46ac-a665-e288f2479422.png)
+
+
 
 </ol>
 
