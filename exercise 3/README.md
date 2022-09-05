@@ -13,21 +13,23 @@ While trying to create an admin group, foundout it already existed and hence no 
   
    which lists about the last ten groups to view it properly. These commands are attached below. 
 
-![Screenshot](screenshot 1.png)
+![scre 4](https://user-images.githubusercontent.com/105982108/188345667-a63c0896-a03e-42b8-b326-8ff8718a542b.png)
 
-![Screenshot](C:\Github\Altschool-cloud-exercises-project\exercise 3)
+![sce5](https://user-images.githubusercontent.com/105982108/188345842-3575f66d-2883-41cb-83cc-de1370b03da0.png)
+
+
 
 Since admin group already exists next thing was to edit the file and add it to sudoers by granting it all the necessary permission using the command:
 
 `sudo visudo /etc/sudoers`
 
-### User privilege specification
+#### User privilege specification
 root    ALL=(ALL:ALL) ALL
 
-### Members of the admin group may gain root privileges
+#### Members of the admin group may gain root privileges
 %admin ALL=(ALL:ALL) ALL
 
-### Allow members of group sudo to execute any command
+#### Allow members of group sudo to execute any command
 %sudo   ALL=(ALL:ALL) ALL
 
 
@@ -43,7 +45,9 @@ This was then created to view it i used :
 
 `cat /etc/group`
 
-![Screenshot](screenshot 1.png)
+![scre6](https://user-images.githubusercontent.com/105982108/188346228-b50c8f0a-7df8-49d8-ad9b-f402882a3b02.png)
+
+![scre6(1)](https://user-images.githubusercontent.com/105982108/188346354-c28bc346-0818-4092-9138-36c394c0d194.png)
 
 ### CREATION OF 3 USERS FOR EACH GROUP
 
@@ -52,7 +56,8 @@ Then i went ahead and created users for each of the groups by using the command:
 
 In which i created Nancy as admin user, Michael in support group and Grace in engineering.
 
-![Screenshot](C:\Users\hp\OneDrive\Pictures)
+![screenshot 2](https://user-images.githubusercontent.com/105982108/188346555-ecc77c39-a4e8-45bd-a352-daa87f7d731d.png)
+
 
  ### GENERATION OF SSH KEYS FOR USER IN ADMIN GROUP
  I switched to Nancy who is the admin user by using the command:
@@ -63,7 +68,8 @@ Then generated the ssh key for the admin user Nancy by using the command:
 
 `ssh-keygen`
 
-![Screenshot](C:\Users\hp\OneDrive\Pictures)
+![screenshot 3](https://user-images.githubusercontent.com/105982108/188346711-33049897-d795-4a33-9dc5-e825f7e2aa92.png)
+
 
 
 
