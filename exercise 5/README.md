@@ -20,14 +20,16 @@ The following are the output of git commands:
 
 `git config -l`
 
-![Screenshot]()
+![Scr1 (2)](https://user-images.githubusercontent.com/105982108/188653401-25c0361e-d23b-49d5-ab7b-bad125e6269a.png)
+
 
 </li><br>
 <li>
 
 `git remote -v`
 
-![Screenshot]()
+![Scr1 (3)](https://user-images.githubusercontent.com/105982108/188653816-72af39dc-e066-4e0c-aa4c-b897656e6652.png)
+
 
 </li>
 
@@ -35,10 +37,10 @@ The following are the output of git commands:
 
 `git log`
 
+![Scr2 (2)](https://user-images.githubusercontent.com/105982108/188655970-a2392048-97cf-4ddc-8de7-39d34f5e2420.png)
+
+
 </li>
-![Screenshot]()
-
-
 
 </ul>
 
