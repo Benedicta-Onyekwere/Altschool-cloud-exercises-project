@@ -28,15 +28,20 @@ I did the installation using the following steps:
 `php -v`
 
 The result is shown in the screenshot below;
+
+![Scrn 1](https://user-images.githubusercontent.com/105982108/188555105-537a504e-61b5-41ff-905a-47b7093052f6.png)
+
 </li>
 
-![Screenshot](C:\Users\hp\OneDrive\Pictures)
+
+
 
 <li>Then i got the content of /etc/apt/sources.list by using:
 
 `cat /etc/apt/sources.list`
 
-![Scrn 2(2)](C:\Users\hp\OneDrive\Pictures)
+![Scrn 2 (2)](https://user-images.githubusercontent.com/105982108/188555406-1f2e7cff-0c3e-4e6e-b2ac-dca0c85a01e0.png)
+
 </li>
 
 </ol>
