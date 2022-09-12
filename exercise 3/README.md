@@ -2,7 +2,7 @@
 ## CREATING SUDOERS, USER GROUPS AND GENERATING SSH KEYS<br>
  For this exercise, three groups consisting of admin,support and engineering were first created in the following ways:
 
-### CREATION OF USER GROUP FOR ADMIN AND ADDING ADMIN TO SUDOERS
+#### CREATION OF USER GROUP FOR ADMIN AND ADDING ADMIN TO SUDOERS
 While trying to create an admin group, foundout it already existed and hence no need to create another instead decided to work with the already created one. Used the command;
 
  `cat /etc/passwd`
@@ -23,25 +23,17 @@ Since admin group already exists next thing was to edit the file and add it to s
 
 `sudo visudo /etc/sudoers`
 
-#### User privilege specification
-root    ALL=(ALL:ALL) ALL
+This opened up a nano editor in which i edited the permission for the admin and made it a sudoers as shown in the image below:
 
-#### Members of the admin group may gain root privileges
-%admin ALL=(ALL:ALL) ALL
-
-#### Allow members of group sudo to execute any command
-%sudo   ALL=(ALL:ALL) ALL
+![scr 1](https://user-images.githubusercontent.com/105982108/189570166-1142cee7-663e-4807-96a9-a56c5f0f0553.png)
 
 
-This opened up a nano editor in which i edited the permission for the admin and made it a sudoers as shown above.
-
-
-### CREATED USER GROUP FOR SUPPORT AND ENGINEERING 
+#### CREATION OF USER GROUP FOR SUPPORT AND ENGINEERING 
 Then i created the support and engineering groups by using the command:
 
 `sudo groupadd support && sudo groupadd engineering`
 
-This was then created to view it i used :
+This was then created, to view it i used :
 
 `cat /etc/group`
 
@@ -49,7 +41,7 @@ This was then created to view it i used :
 
 ![scre6(1)](https://user-images.githubusercontent.com/105982108/188346354-c28bc346-0818-4092-9138-36c394c0d194.png)
 
-### CREATION OF 3 USERS FOR EACH GROUP
+#### CREATION OF 3 USERS FOR EACH GROUP
 
 Then i went ahead and created users for each of the groups by using the command:
 `sudo -g -m -s /usr/bin/bash username`
@@ -59,7 +51,7 @@ In which i created Nancy as admin user, Michael in support group and Grace in en
 ![screenshot 2](https://user-images.githubusercontent.com/105982108/188346555-ecc77c39-a4e8-45bd-a352-daa87f7d731d.png)
 
 
- ### GENERATION OF SSH KEYS FOR USER IN ADMIN GROUP
+ #### GENERATION OF SSH KEYS FOR USER IN ADMIN GROUP
  I switched to Nancy who is the admin user by using the command:
 
  `sudo su -Nancy`
