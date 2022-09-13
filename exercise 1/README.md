@@ -6,7 +6,8 @@ I started this exercise by first downloading Oracle Virtual Machine Virtual Box,
 <li>Initialized the the Virtual Machine by using the command 'vagrant init ubuntu/focal64' which is the specified box name. This deposited the Vagrantfile in my directory.</li><br>
 <li>Configured private network to dhcp(dynamic host configuration protocol) in the nano editor. This is shown in the image below:</li><br>
 
-![Scrn 3](https://user-images.githubusercontent.com/105982108/189568752-20f48ba2-49d3-46f2-94b8-46e6748ed4fa.png)
+![Scrn 3](https://user-images.githubusercontent.com/105982108/189784942-bba3af74-225c-4b1e-ab92-5bae423d45bb.png)
+
 
 <li>Started the Virtual Machine by using the command 'vagrant up'.</li><br>
 <li>Then i installed net tools in order for the command 'ifconfig' (which is a command used to configure a network interface) to work.</li><br>
