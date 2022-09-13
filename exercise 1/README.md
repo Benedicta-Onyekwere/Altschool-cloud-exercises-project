@@ -1,4 +1,4 @@
-# Altschool-cloud-exercises-project    
+# Altschool-cloud-exercises-project     
 ## SETTING UP UBUNTU 20.04 LTS ON LOCAL MACHINE USING VAGRANT<br>
 I started this exercise by first downloading Oracle Virtual Machine Virtual Box,then installed vagrant on my local machine, verified it has been installed by inputing 'vagrant' which showed me it was availabe. Then i proceeded with the following steps to install ubuntu 20_04 LTS:
 <ol>
@@ -17,7 +17,3 @@ I started this exercise by first downloading Oracle Virtual Machine Virtual Box,
 
 
 </ol>
-
-
-
-
