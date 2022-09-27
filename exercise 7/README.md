@@ -25,7 +25,8 @@ Ran:
 
 I set the timezone to correspond with our time in Lagos, Nigeria. Then updated my system before installing any package. This is as shown below:
 
-[img2(2)]
+![img2 (2)](https://user-images.githubusercontent.com/105982108/192431492-564b187b-b4ed-4a7f-835e-8b694dc049be.png)
+
 
 ##### FOR SSMTP:
 
@@ -41,9 +42,11 @@ I set the timezone to correspond with our time in Lagos, Nigeria. Then updated m
 
 The images are as shown below:
 
-[img9(2)]
+![img9 (2)](https://user-images.githubusercontent.com/105982108/192431664-1d53d64a-99e3-4d3c-9457-7c22275adc12.png)
 
-[img3(2)]
+
+![img3 (2)](https://user-images.githubusercontent.com/105982108/192431917-d6afcc1b-79ab-44ea-a752-8e73b223d95d.png)
+
 
 Next step is to edit the SSMTP configuration file with the following command:
 
@@ -51,7 +54,8 @@ Next step is to edit the SSMTP configuration file with the following command:
 
 The configuration file is shown in the figure below:
 
-![Img12][C:\Users\hp\OneDrive\Pictures]
+![img12](https://user-images.githubusercontent.com/105982108/192432333-a206ce62-9cc6-40cc-90a0-e27bc9a5a0f5.png)
+
 
 Then it is edited and configured as follows:
 
@@ -68,17 +72,20 @@ Then it is edited and configured as follows:
 
 After editing the file, i got the figure below:
 
-![img1][]
+![img1](https://user-images.githubusercontent.com/105982108/192432845-9e504bbf-3b00-41e0-be2b-7e7bcd1233b1.png)
+
 
 Used the command below to test it out.
 
-`echo "Testingclear!" | mail -s "Test Email" your_email_address@gmail.com`
+`echo "Testingclear!" | mail -s "Test Email" email_address@gmail.com`
 
-![img4][]
+
+![img4](https://user-images.githubusercontent.com/105982108/192433244-aadbfe57-079e-4b76-bfac-6dbbe4f840fb.png)
 
 This worked and i got the following output:
 
-[img5]
+![img5](https://user-images.githubusercontent.com/105982108/192433672-b73085b4-c693-4e69-a00e-96b9259f68fb.png)
+
 
 
 ### WRITING A BASH SCRIPT TO AUTOMATE THE TASK
@@ -145,7 +152,8 @@ The echo “ — — — — “ serves as a delimiter of sorts and it is conclu
 
 The bash script file now looks as shown below:
 
-[img7]
+![img7](https://user-images.githubusercontent.com/105982108/192434108-716fc69e-c8a0-4aa6-b2c2-48ce01de41c4.png)
+
 
 </li>
 
@@ -161,8 +169,11 @@ Then at the very end of the file i.e the bottom part edited it and added the fol
 
 `0 */1 * * * bash /home/vagrant/memory_logs/memory_log.sh`
 
+![img8](https://user-images.githubusercontent.com/105982108/192434843-4f2b22e5-3cdb-49e8-b2ee-a7e20c1b0e53.png)
+
+
 I saved and exited the crontab. This command simply points to our bash script and instructs that it should be executed “At minute 0” of every hour of every day of the month.
 
 Sample of the email i received is shown below:
 
-[img10(2)]
+![img10 (2)](https://user-images.githubusercontent.com/105982108/192434303-c45c59db-bd02-47a2-baf9-bf3afcd12a31.png)
