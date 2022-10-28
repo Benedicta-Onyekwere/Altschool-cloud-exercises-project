@@ -1,9 +1,9 @@
-  ## **CALCULATION  OF NETWORK IP, NUMBER OF HOSTS, RANGE OF IP ADDRESSES AND BROADCAST IP FROM A GIVEN SUBNET**
+  ### **CALCULATION  OF NETWORK IP, NUMBER OF HOSTS, RANGE OF IP ADDRESSES AND BROADCAST IP FROM A GIVEN SUBNET**
 In computer networks, an IP address is a unique address that identifies a device on the internet or a local network. Using IP address we can find information about the Class of IP address and number of computers connected in that network (range of IP address in that network), network IP address, broadcast address.
 
-The given Ip address and subnetmask is 193.16.20.35/29. Where the IP address is 193.16.20.35 and the subnet mask is 29.
+The given Ip address and subnetmask is 193.16.20.35/29. Where the IP address is 193.16.20.35 and the subnet mask is 29.1. 
 
-1. **CALULATION OF NETWORK IP**
+**CALULATION OF NETWORK IP**
 
 This is done using the following steps:
 
