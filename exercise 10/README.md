@@ -1,15 +1,15 @@
-##**DEPLOYMENT OF A REAL LIFE APPLICATION OF LARAVEL USING DEBIAN 11/BULLSEYE64 ON DIGITALOCEAN**
+**DEPLOYMENT OF A REAL LIFE APPLICATION OF LARAVEL USING DEBIAN 11/BULLSEYE64 ON DIGITALOCEAN**
 
 To start this project which involves deploying a Laravel app using Apache, installing Php and all its' dependencies and also creating a database using Msql, i first had to install LAMP Stack(Linux, Apache, MySQL, PHP) which is an acronym denoting one of the most common software stacks for many of the web's most popular applications.
 
-####**Prerequisites to Install LAMP**
+**Prerequisites to Install LAMP**
 <ul>
-<li>Root access to your server or a sudo user.</li>
+<li>Root access to server or a sudo user.</li>
 
 <li>Domain pointed to my server IP to install Let’sEncrypt SSL.</li>
 </ul>
 
-####**Step 1: SETUP INITIALIZATION**
+**Step 1: SETUP INITIALIZATION**
 
  Started by updating and upgrading packages using the commands:
 
@@ -25,7 +25,7 @@ respectively since i was working as a root user. Then checked to confirm that wg
 
 which it was.
 
-####**Step 2: SETUP HOSTNAME AND TIMEZONE**
+**Step 2: SETUP HOSTNAME AND TIMEZONE**
 
 To setup my hostname with my domainname **bennieo.me**, did this using the command:
 
@@ -37,13 +37,14 @@ Then to confirm, used command:
 
 The output is as shown below:
 
-![screenshot135]
+![image](https://user-images.githubusercontent.com/105982108/198457891-5ffc53d3-1dae-41a1-83e8-252dc8e4d89f.png)
+
 
 Then to set timezone, used the command:
 
 `timedatectl set-timezone Africa/Lagos`
 
-####**Step 3: EDITED HOSTS FILE**
+**Step 3: EDIT HOSTS FILE**
 
 Edited /etc/hosts file to include IP address of server and my domainname using the command:
 
@@ -51,9 +52,10 @@ Edited /etc/hosts file to include IP address of server and my domainname using t
 
 The rendered output is as shown below:
 
-![screenshot119]
+![image](https://user-images.githubusercontent.com/105982108/198457360-52e4a189-c5a7-482c-92c2-cdab0bcdc2e7.png)
 
-####**Step 4: SETUP FIREWALL**
+
+**Step 4: SETUP FIREWALL**
 
 I set up Uncomplicated Firewall (UFW) with Apache to allow public access on default web ports for HTTP and HTTPS using command:
 
@@ -75,13 +77,13 @@ Then enabled them all using:
 
 `ufw enable`
 
-####**Step 5: INSTALL APACHE 2**
+**Step 5: INSTALL APACHE 2**
 
 Did this using:
 
 `apt install apache2`
 
-####**Step 6: INSTALL MYSQL**
+**Step 6: INSTALL MYSQL**
 
 To do this i first installed latest releases package using:
 
@@ -101,18 +103,19 @@ To verify that Msql server is running i used:
 
 The output is as shown below that it enabled and running:
 
-![Scr137]
+![image](https://user-images.githubusercontent.com/105982108/198456566-2e03e89f-6634-4196-8a23-5b5443a868e6.png)
 
 
-#####**SECURE MYSQL**
+
+**SECURE MYSQL**
 
 Used the follwing script to improve MySQL server security:
 
 `sudo mysql_secure_installation`
 
-####**Step 7: INSTALL PHP**
+**Step 7: INSTALL PHP**
 
-Started by adding the SURY PPA for PHP 8.1
+Started by adding the Sury PPA for PHP 8.1
 
 `sudo apt -y install lsb-release apt-transport-https ca-certificates`
 
@@ -135,9 +138,10 @@ Then checked the version installed using:
 
 `php -v`
 
-![Scr139]
+![image](https://user-images.githubusercontent.com/105982108/198455939-ff8b79c9-12f3-4b83-8e8a-f915d6449e8a.png)
 
-####**Step 8: CONFIGURING PHP**
+
+**Step 8: CONFIGURING PHP**
 
 Now configured PHP for Web Applications by changing some values in **php.ini** file.
 For PHP 8.1 with Apache the **php.ini** location will be in following directory.
@@ -158,17 +162,20 @@ max_input_vars = 5000
 
 max_input_time = 150
 
-![Scr131]
+![image](https://user-images.githubusercontent.com/105982108/198454461-b9f21554-6141-4753-bb85-a285c4426254.png)
 
-![Scr133]
 
-![Scr134]
+![image](https://user-images.githubusercontent.com/105982108/198454888-2f949090-75a7-4b98-80e8-ef25d941c874.png)
+
+
+![image](https://user-images.githubusercontent.com/105982108/198455322-e72a2959-65fd-4319-83f4-94eead0b6f1b.png)
+
 
 Then restarted Apache for the changes to take effect
 
 `systemctl restart apache2`
 
-####**Step 9:INSTALL COMPOSER**
+**Step 9:INSTALL COMPOSER**
 
 I installed Composer beacause it is a tool for dependency management in PHP. It allows one to declare the libraries your project depends on and it will manage (install/update) them for you . Laravel uses Composer as a dependency manager, which keeps track of all the data necessary to handle packages.
 
@@ -192,7 +199,7 @@ Then i assigned execute permission using:
 
 
 
-####**Step 10: CONFIGURING APACHE**
+**Step 10: CONFIGURING APACHE**
 
 Started by disabling default Apache configuration which removes the default page using:
 
@@ -212,12 +219,11 @@ Then cloned the laravel project from github using:
 
 `git clone https://github.com/f1amy/laravel-realworld-example-app.git`
 
-Then moved the it into my document root file using:
+Then moved it into my document file using:
 
 `mv laravel-realworld-example-app.gt bennieo`
 
 Then to confirm this has been done changed directory into **bennieo** and checked the file and cd back to previous directory using:
-
 
 `ls -al`
 
@@ -241,7 +247,8 @@ Did this using:
 
 `sudo nano /etc/apache2/sites-available/domainname.conf`
 
-![Scr125]
+![image](https://user-images.githubusercontent.com/105982108/198452879-861cc566-2bf8-46f6-ab34-5844e6925c1f.png)
+
 
 Then enabled the new configuration using:
 
@@ -253,7 +260,8 @@ The .htaccess file modifies website details without changing the configuration f
 
 `nano .htaccess`
 
-![Scr126]
+![image](https://user-images.githubusercontent.com/105982108/198452311-f5bc8ac9-9fc0-4433-a2f5-14595023d42f.png)
+
 
 Then the mod_rewrite Apache module which helps manipulate URL requests on the server's side. Rules and patterns check an inputted URL through regular expressions and variables to extract information and serve the desired page. This is then used as follows:
 
@@ -265,9 +273,10 @@ After which the apache server is restarted but before this is done, first copied
 
 `nano .env`
 
-![129]
+![image](https://user-images.githubusercontent.com/105982108/198451687-e9182f0a-6c47-4a2d-999b-f227c9719eca.png)
 
-##**Step 11 CREATING DATABASE ON MYSQL**
+
+**Step 11 CREATING DATABASE ON MYSQL**
 
 Started by logging in using:
 
@@ -287,7 +296,8 @@ To create a database, database user, and grant all privileges to the database us
 
 After creating it, to confirm it is working i exited and logged in with my credentials and it worked.
 
-![136]
+![image](https://user-images.githubusercontent.com/105982108/198451079-f7cdd466-3450-4adf-ad79-aad81c115304.png)
+
 
 Then restarted apache using:
 
@@ -295,7 +305,8 @@ Then restarted apache using:
 
 Then edited the web.php file by changing directory to routes where it is located.
 
-![Scr141]
+![image](https://user-images.githubusercontent.com/105982108/198450552-3397e4cc-3606-45c4-89a9-f6fe9ec7f404.png)
+
 
 Then i migrated database first by installing composer using:
 
@@ -319,7 +330,7 @@ Then to check that there is no error in my config file before loading the app us
 
  `Syntax Ok`
 
-Which gave Syntax Ok confirming everything was in place. Then checked the status of applications before reloading Apache used:
+Which gave Syntax Ok confirming everything was in place. Then checked the status of applications before reloading Apache using:
 
 `systemctl status apache2`
 
@@ -329,11 +340,12 @@ Which showed they were both running ok. Then now reloaded using:
 
 `systemctl reload apache2`
 
-Then inputted my domainname on my browser which showed laravel has been deployed.
+Then inputted my domainname on my browser which showed laravel has been deployed without it being secure.
 
-![Scr118]
+![image](https://user-images.githubusercontent.com/105982108/198449873-0efb74a5-d740-42ec-9598-9b1614db87e7.png)
 
-####**Step 12 INSTALLING LET'S ENCRYPT SSL**
+
+**Step 12 INSTALLING LET'S ENCRYPT SSL**
 
 HTTPS is a protocol for secure communication between a server (instance) and a client (web browser). This is a neccessity due to cyber crimes like hacking.
 Started with installing Cerbot which will install Lets Encrypt SSL using snap.
@@ -358,6 +370,6 @@ Then to execute the following command to install your certificates used:
 
 `sudo certbot --apache --agree-tos --redirect -m youremail@email.com -d domainname.com -d www.domainname.com`
 
-The output is shown below:
+The output which shows it has been secured with the padlock unlike the previous image is shown below:
 
-![]
+![image](https://user-images.githubusercontent.com/105982108/198448857-c80f91b7-7bd9-4e42-9bb8-040a400ea036.png)
