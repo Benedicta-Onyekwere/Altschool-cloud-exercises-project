@@ -1,0 +1,374 @@
+---
+- name: Setup server
+  hosts: 159.65.16.22
+  vars:
+    vars_files:
+      - /root/vars/anb.yml     
+
+  tasks:
+    - name: 'Update Cache'
+      apt:
+        update_cache: 'yes'
+        upgrade: 'yes'
+
+    - name: Set System Hostname
+      hostname:
+        name: server.miniapp.bennieo.me
+    - name: Set Timezone to Africa/Lagos
+      timezone:
+        name: Africa/Lagos
+
+
+
+    - name: Installation install software-properties-common
+      apt: name=software-properties-common
+
+    - name: Add dependencies for PHP versions 
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+        state: present
+      when: ansible_distribution == "Debian"
+
+    - name: Add Ondrej Sury's apt key 
+      apt_key:
+        url: https://packages.sury.org/php/apt.gpg
+        id: 15058500A0235D97F5D10063B188E2B695BD4743
+        state: present
+      when: ansible_distribution == "Debian"
+
+    - name: Add Ondrej Sury's repo 
+      apt_repository:
+        repo: "deb https://packages.sury.org/php/ {{ ansible_distribution_release }} main"
+        state: present
+      register: php_ondrej_debian_repo
+      when: ansible_distribution == "Debian"
+
+    - name: Update apt caches after repo is added 
+      apt: update_cache=true
+      when:
+        - php_ondrej_debian_repo.changed
+        - ansible_distribution == "Debian"
+      tags: ["skip_ansible_lint"]
+
+    - name: Installation of PHP 8.1
+      apt: name=php8.1 state=present
+
+    - name: install lamp stack
+      apt:
+        pkg:
+          - php8.1
+          - php8.1-mysql
+          - php8.1-curl
+          - php8.1-xsl
+          - php8.1-cgi
+          - php8.1-gd
+          - php8.1-mbstring
+          - php8.1-zip
+          - libapache2-mod-php
+        state: present
+        update_cache: yes
+
+    - name: Install packages
+      apt:
+        pkg:
+          - php8.1
+          - php-xml
+          - php-pgsql
+          - libapache2-mod-php
+          - apache2
+          - git
+          - zip
+          - unzip
+          - curl
+          - php-curl
+          - wget
+        state: latest
+        update_cache: yes
+      become: yes
+
+ #   - name: Install Uncomplicated Firewall
+   #   apt:
+    #    name: ufw
+     #   state: present
+  #  - name: Allow Apache
+   #   ufw:
+    #    name: WWW
+     #   rule: allow
+  #  - name: Allow Apache Full
+   #   ufw:
+    #    name: WWW Full
+     #   rule: allow
+  #  - name: Allow OpenSSH
+   #   ufw:
+    #    name: OpenSSH
+     #   rule: allow
+  #  - name: Allow access to tcp port 22 (SSH)
+   #   ufw:
+    #    rule: allow
+    #   port: '22'
+     #   proto: tcp
+  #  - name: Allow access to tcp port 80 (HTPP)
+   #   ufw:
+    #    rule: allow
+     #   port: '80'
+      #  proto: tcp
+  #  - name: Allow access to port 443 (HTPPS)
+   #   ufw:
+    #    rule: allow
+     #   port: '443'
+   # - name: Allow access to port 853 (DNS OVER TLS)
+    #  ufw:
+     #   rule: allow
+      #  port: '853'
+  #  - name: Allow access to port 3306 (MySQL Server)
+   #   ufw:
+    #    rule: allow
+     #   port: '3306'
+  #  - name: Allow access to port 5432 (PostgreSQL Server)
+   #   ufw:
+    #    rule: allow
+     #   port: '5432'
+  #  - name: Enable Uncomplicated Firewall
+   #   ufw:
+    #    state: enabled
+     #   policy: allow
+
+    - name: Install Python3
+      apt:
+        name: python3
+        state: latest
+
+    - name: Install Pip
+      apt:
+        name: python3-pip
+        state: latest
+ 
+    - name: Installing Mysql Dependencies
+      package:
+       name: "{{item}}"
+       state: present
+       update_cache: yes
+      loop:
+        - mysql-server
+        - mysql-client
+        - python3-mysqldb
+        - libmysqlclient-dev
+      become: yes
+
+
+    - name: Install Python3-PyMySQL Library
+      apt:
+        name: python3-pymysql
+        state: present
+
+  #  - name: Start the MySQL service
+   #   service:
+    #    name: mysql
+     #   state: started
+      #  enabled: true
+
+   # - name: Create A Database User
+    #  mysql_user:
+     #   name: "root"
+      #  password: "grant"
+       # host_all: yes
+     #   login_host: 159.65.16.22 
+      #  check_implicit_admin: yes
+       # priv: "*.*:ALL,GRANT"
+      #  login_unix_socket: /var/run/mysqld/mysqld.sock
+       # state: present
+    
+    - name: Create A New Database 
+      mysql_db:
+        name: "testdb"
+        login_user: "root"
+        login_password: "grant"
+        state: present
+
+    - name: Set Php_Executable Variable To A Default If Not Defined.
+      set_fact:
+         php_executable: php
+      when: php_executable is not defined
+
+    - name: Check if Composer Is Installed.
+      stat: "path=/root/Altschool-cloud-exercises-project/ExamProject/usr/src/"
+      register: composer_bin
+
+    - name: Get Composer Installer Signature.
+      uri:
+        url: https://composer.github.io/installer.sig
+        return_content: true
+      register: composer_installer_signature
+      when: not composer_bin.stat.exists
+
+    - name: Composer Installer Download
+      get_url:
+        url: https://getcomposer.org/installer
+        dest: /tmp/composer-installer.php
+        mode: 0755
+        checksum: "sha384:{{ composer_installer_signature.content }}"
+      when: not composer_bin.stat.exists
+
+    - name: Run Composer Installer.
+      command: >
+          {{ php_executable }} composer-installer.php chdir=/tmp
+      when: not composer_bin.stat.exists
+
+    - name: Add Composer To Global Path
+      command: >
+        mv /tmp/composer.phar "/usr/local/bin/composer"  creates="/usr/local/bin/composer"
+      when: not composer_bin.stat.exists
+
+   # - name: Clone Laravel Application
+    #  git:
+     #   repo: https://github.com/f1amy/laravel-realworld-example-app.git
+      #  dest: /var/www/miniapp
+     #   force: yes
+    #  become: yes
+
+    - name: Take Ownership Of Miniapp Folder
+      file:
+        path: /var/www/miniapp
+        state: directory
+        recurse: yes
+        owner: www-data
+        group: www-data
+      become: yes
+
+    - name: Set Permissions For Laravel Storage Folder
+      file:
+        path: /var/www/miniapp/storage
+        state: directory
+        recurse: yes
+        mode: "0755"
+      become: yes
+
+    - name: Cache Folder Change Of The Mode 
+      file:
+        path: /var/www/miniapp/bootstrap/cache
+        state: directory
+        recurse: yes
+        mode: "0775"    
+
+    - name: Copy Env File
+      copy:
+        src: /var/www/miniapp/.env.example
+        remote_src: yes
+        dest: /var/www/miniapp/.env
+        mode: "0775"
+
+    - name: Change Ownership To be Assigned to Web Servers
+      file:
+        path: /var/www/miniapp/.env
+        state: file
+        owner: www-data
+        group: www-data
+
+    - name: Copy Apache Config
+      copy:
+        src: /root/ansible/miniapp.conf
+        dest: /etc/apache2/sites-available/miniapp.conf
+        mode: "0644"
+      become: yes
+
+
+    - name: Change The Mode Of The Web.php File So It Can Also Be In the www-data
+      file:
+       path: /var/www/miniapp/routes/web.php
+       state: file
+       owner: www-data
+       group: www-data
+       mode: "0775"
+
+    - name: Set Server Name
+      copy:
+        dest: "/etc/apache2/sites-available/domain.conf"
+        content: |
+          <VirtualHost *:80>
+              ServerAdmin contact@bennieo.me
+              ServerName miniapp.bennieo.me
+              ServerAlias miniapp.bennieo.com
+              DocumentRoot /var/www/miniapp/public
+              <Directory /var/www/miniapp/public>
+                  Options Indexes FollowSymLinks
+                  AllowOverride All
+                  Require all granted
+              </Directory>
+              ErrorLog ${APACHE_LOG_DIR}/error.log
+              CustomLog ${APACHE_LOG_DIR}/access.log combined
+          </VirtualHost>
+
+
+
+    - name: Copy the HyperText Access File to Redirect the Page to Display the public files
+      copy:
+        src: /root/ansible/.htaccess
+        dest: /var/www/miniapp
+
+    - name: Change the Mode of the .htaccess file so it can also be in the www-data
+      file:
+        path: /var/www/miniapp/.htaccess
+        state: file
+        owner: www-data
+        group: www-data
+        mode: "0775"
+
+    - name: Disable The Default Apache Web Page
+      command: a2dissite 000-default.conf
+    - name: Restart apache
+      service:
+        name: apache2
+        state: restarted
+
+    - name: enabling the New Config
+      shell: |
+        a2ensite miniapp.conf
+        a2dissite 000-default.conf
+        a2enmod rewrite
+        service apache2 restart
+      become: yes
+
+      # - name: Installation Of Cerbot To Install Let's Encrypt SSL Using Snap
+      #apt:
+      #  update_cache: 'yes'
+
+      # - name: Install Snapd
+      shell: apt install snapd
+      #
+      # - name: Install Core
+      #shell: snap install core
+      
+      #- name: Refresh Core
+      # shell: snap refresh core
+
+      #- name: Install Cerbot
+      #shell: snap install --classic certbot
+
+      #- name: Cerbot Configuration To Be Executable As A Command
+      # shell: ln -s /snap/bin/certbot /usr/bin/certbot
+
+      #- name: Installation Of Certificates With The following commands
+      #shell: >-
+      # yes | certbot --apache --agree-tos --redirect -m contact@bennieo.me -d
+      # miniapp.bennieo.me
+
+
+  roles:
+    - pgsql
+
+   # - name: "Copy And Execute Postgresql"
+    #  template: 
+     #   dest: /root/ubuntu/script.sh
+      #  scr: /root/vagrant/new/script.sh
+
+   # - name: "Execute PostgreSQL Bash Script"
+    #  command: "sh /root/ubuntu/script.sh"
+
+   
+
+ 
+
+    
+

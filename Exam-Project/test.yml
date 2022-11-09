@@ -1,0 +1,15 @@
+---
+- name: Setup server
+  hosts: 159.65.16.22
+
+  tasks:
+    - name: "Copy And Execute Postgresql"
+      template:
+        dest: /root/ubuntu/script.sh
+        scr: /root/vagrant/new/script.sh
+        mode: "0777"
+    - name: "Execute PostgreSQL Bash Script"
+      command: "sh /root/ubuntu/script.sh"
+
+
+

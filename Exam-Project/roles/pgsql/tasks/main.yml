@@ -1,0 +1,30 @@
+---
+# tasks file for pgsql
+- name: "Copy And Execute Postgresql"
+  template:
+    src: "script.sh.j2"
+    dest: "/root/script.sh"
+    mode: "0777"
+
+- name: "Execute PostgreSQL Bash Script"
+  command: "sh /root/script.sh"
+
+- name: "Copy .env to slave"
+  template:
+    src: ".env.j2"
+    dest: "/var/www/miniapp/.env"
+
+
+
+- name: Generate app key
+  command: "/usr/bin/php /var/www/miniapp/artisan key:generate"
+  tags: [ 'laravel', 'artisan:key' ]
+
+- name: Set up app storage link
+  command: "/usr/bin/php /var/www/miniapp/artisan storage:link"
+  tags: [ 'laravel', 'artisan:storage' ]
+
+- name: Run Migrations + Seeders
+  command: "/usr/bin/php /var/www/miniapp/artisan migrate --seed --force"
+  tags: [ 'laravel', 'artisan:migrate' ]
+  ignore_errors: yes
