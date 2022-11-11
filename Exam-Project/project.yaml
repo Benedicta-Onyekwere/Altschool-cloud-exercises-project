@@ -1,10 +1,13 @@
 ---
 - name: Setup server
-  hosts: 159.65.16.22
+  hosts: host
+  remote_user: root
   vars:
     vars_files:
       - /root/vars/anb.yml     
-
+   roles:
+    - pgsql
+    
   tasks:
     - name: 'Update Cache'
       apt:
@@ -13,7 +16,7 @@
 
     - name: Set System Hostname
       hostname:
-        name: server.miniapp.bennieo.me
+        name: server.bennieo.me
     - name: Set Timezone to Africa/Lagos
       timezone:
         name: Africa/Lagos
@@ -88,52 +91,52 @@
         update_cache: yes
       become: yes
 
- #   - name: Install Uncomplicated Firewall
-   #   apt:
-    #    name: ufw
-     #   state: present
-  #  - name: Allow Apache
-   #   ufw:
-    #    name: WWW
-     #   rule: allow
-  #  - name: Allow Apache Full
-   #   ufw:
-    #    name: WWW Full
-     #   rule: allow
-  #  - name: Allow OpenSSH
-   #   ufw:
-    #    name: OpenSSH
-     #   rule: allow
-  #  - name: Allow access to tcp port 22 (SSH)
-   #   ufw:
-    #    rule: allow
-    #   port: '22'
-     #   proto: tcp
-  #  - name: Allow access to tcp port 80 (HTPP)
-   #   ufw:
-    #    rule: allow
-     #   port: '80'
-      #  proto: tcp
-  #  - name: Allow access to port 443 (HTPPS)
-   #   ufw:
-    #    rule: allow
-     #   port: '443'
-   # - name: Allow access to port 853 (DNS OVER TLS)
-    #  ufw:
-     #   rule: allow
-      #  port: '853'
-  #  - name: Allow access to port 3306 (MySQL Server)
-   #   ufw:
-    #    rule: allow
-     #   port: '3306'
-  #  - name: Allow access to port 5432 (PostgreSQL Server)
-   #   ufw:
-    #    rule: allow
-     #   port: '5432'
-  #  - name: Enable Uncomplicated Firewall
-   #   ufw:
-    #    state: enabled
-     #   policy: allow
+   - name: Install Uncomplicated Firewall
+      apt:
+        name: ufw
+        state: present
+    - name: Allow Apache
+      ufw:
+        name: WWW
+        rule: allow
+    - name: Allow Apache Full
+      ufw:
+        name: WWW Full
+        rule: allow
+      - name: Allow OpenSSH
+      ufw:
+        name: OpenSSH
+        rule: allow
+    - name: Allow access to tcp port 22 (SSH)
+      ufw:
+        rule: allow
+       port: '22'
+        proto: tcp
+    - name: Allow access to tcp port 80 (HTPP)
+      ufw:
+        rule: allow
+        port: '80'
+        proto: tcp
+    - name: Allow access to port 443 (HTPPS)
+      ufw:
+        rule: allow
+        port: '443'
+    - name: Allow access to port 853 (DNS OVER TLS)
+      ufw:
+        rule: allow
+        port: '853'
+    - name: Allow access to port 3306 (MySQL Server)
+      ufw:
+        rule: allow
+        port: '3306'
+    - name: Allow access to port 5432 (PostgreSQL Server)
+      ufw:
+        rule: allow
+        port: '5432'
+    - name: Enable Uncomplicated Firewall
+      ufw:
+        state: enabled
+        policy: allow
 
     - name: Install Python3
       apt:
@@ -163,22 +166,22 @@
         name: python3-pymysql
         state: present
 
-  #  - name: Start the MySQL service
-   #   service:
-    #    name: mysql
-     #   state: started
-      #  enabled: true
+    - name: Start the MySQL service
+      service:
+        name: mysql
+        state: started
+        enabled: true
 
-   # - name: Create A Database User
-    #  mysql_user:
-     #   name: "root"
-      #  password: "grant"
-       # host_all: yes
-     #   login_host: 159.65.16.22 
-      #  check_implicit_admin: yes
-       # priv: "*.*:ALL,GRANT"
-      #  login_unix_socket: /var/run/mysqld/mysqld.sock
-       # state: present
+    - name: Create A Database User
+      mysql_user:
+        name: "root"
+        password: "grant"
+        host_all: yes
+        login_host: 167.99.94.237 
+        check_implicit_admin: yes
+        priv: "*.*:ALL,GRANT"
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+        state: present
     
     - name: Create A New Database 
       mysql_db:
@@ -221,16 +224,16 @@
         mv /tmp/composer.phar "/usr/local/bin/composer"  creates="/usr/local/bin/composer"
       when: not composer_bin.stat.exists
 
-   # - name: Clone Laravel Application
-    #  git:
-     #   repo: https://github.com/f1amy/laravel-realworld-example-app.git
-      #  dest: /var/www/miniapp
-     #   force: yes
-    #  become: yes
+    - name: Clone Laravel Application
+      git:
+        repo: https://github.com/f1amy/laravel-realworld-example-app.git
+        dest: /var/www/bennieo
+        force: yes
+      become: yes
 
     - name: Take Ownership Of Miniapp Folder
       file:
-        path: /var/www/miniapp
+        path: /var/www/bennieo
         state: directory
         recurse: yes
         owner: www-data
@@ -239,7 +242,7 @@
 
     - name: Set Permissions For Laravel Storage Folder
       file:
-        path: /var/www/miniapp/storage
+        path: /var/www/bennieo/storage
         state: directory
         recurse: yes
         mode: "0755"
@@ -247,36 +250,36 @@
 
     - name: Cache Folder Change Of The Mode 
       file:
-        path: /var/www/miniapp/bootstrap/cache
+        path: /var/www/bennieo/bootstrap/cache
         state: directory
         recurse: yes
         mode: "0775"    
 
     - name: Copy Env File
       copy:
-        src: /var/www/miniapp/.env.example
+        src: /var/www/bennieo/.env.example
         remote_src: yes
-        dest: /var/www/miniapp/.env
+        dest: /var/www/bennieo/.env
         mode: "0775"
 
     - name: Change Ownership To be Assigned to Web Servers
       file:
-        path: /var/www/miniapp/.env
+        path: /var/www/bennieo/.env
         state: file
         owner: www-data
         group: www-data
 
     - name: Copy Apache Config
       copy:
-        src: /root/ansible/miniapp.conf
-        dest: /etc/apache2/sites-available/miniapp.conf
+        src: /root/ansible/bennieo.conf
+        dest: /etc/apache2/sites-available/bennieo.conf
         mode: "0644"
       become: yes
 
 
     - name: Change The Mode Of The Web.php File So It Can Also Be In the www-data
       file:
-       path: /var/www/miniapp/routes/web.php
+       path: /var/www/bennie0/routes/web.php
        state: file
        owner: www-data
        group: www-data
@@ -288,10 +291,10 @@
         content: |
           <VirtualHost *:80>
               ServerAdmin contact@bennieo.me
-              ServerName miniapp.bennieo.me
+              ServerName www.bennieo.me
               ServerAlias miniapp.bennieo.com
-              DocumentRoot /var/www/miniapp/public
-              <Directory /var/www/miniapp/public>
+              DocumentRoot /var/www/bennieo/public
+              <Directory /var/www/bennieo/public>
                   Options Indexes FollowSymLinks
                   AllowOverride All
                   Require all granted
@@ -305,11 +308,11 @@
     - name: Copy the HyperText Access File to Redirect the Page to Display the public files
       copy:
         src: /root/ansible/.htaccess
-        dest: /var/www/miniapp
+        dest: /var/www/bennieo
 
     - name: Change the Mode of the .htaccess file so it can also be in the www-data
       file:
-        path: /var/www/miniapp/.htaccess
+        path: /var/www/bennieo/.htaccess
         state: file
         owner: www-data
         group: www-data
@@ -330,41 +333,33 @@
         service apache2 restart
       become: yes
 
-      # - name: Installation Of Cerbot To Install Let's Encrypt SSL Using Snap
-      #apt:
-      #  update_cache: 'yes'
+       - name: Installation Of Cerbot To Install Let's Encrypt SSL Using Snap
+      apt:
+        update_cache: 'yes'
 
-      # - name: Install Snapd
+       - name: Install Snapd
       shell: apt install snapd
-      #
-      # - name: Install Core
-      #shell: snap install core
       
-      #- name: Refresh Core
-      # shell: snap refresh core
+       - name: Install Core
+      shell: snap install core
+      
+      - name: Refresh Core
+       shell: snap refresh core
 
-      #- name: Install Cerbot
-      #shell: snap install --classic certbot
+      - name: Install Cerbot
+      shell: snap install --classic certbot
 
-      #- name: Cerbot Configuration To Be Executable As A Command
-      # shell: ln -s /snap/bin/certbot /usr/bin/certbot
+      - name: Cerbot Configuration To Be Executable As A Command
+       shell: ln -s /snap/bin/certbot /usr/bin/certbot
 
-      #- name: Installation Of Certificates With The following commands
-      #shell: >-
-      # yes | certbot --apache --agree-tos --redirect -m contact@bennieo.me -d
-      # miniapp.bennieo.me
+      - name: Installation Of Certificates With The following commands
+        shell: >-
+        yes | certbot --apache --agree-tos --redirect -m contact@bennieo.me -d bennieo.me
 
 
-  roles:
-    - pgsql
+ 
 
-   # - name: "Copy And Execute Postgresql"
-    #  template: 
-     #   dest: /root/ubuntu/script.sh
-      #  scr: /root/vagrant/new/script.sh
-
-   # - name: "Execute PostgreSQL Bash Script"
-    #  command: "sh /root/ubuntu/script.sh"
+ 
 
    
 
