@@ -231,7 +231,7 @@
         force: yes
       become: yes
 
-    - name: Take Ownership Of Miniapp Folder
+    - name: Take Ownership Of Bennieo Folder
       file:
         path: /var/www/bennieo
         state: directory
@@ -279,7 +279,7 @@
 
     - name: Change The Mode Of The Web.php File So It Can Also Be In the www-data
       file:
-       path: /var/www/bennie0/routes/web.php
+       path: /var/www/bennieo/routes/web.php
        state: file
        owner: www-data
        group: www-data
@@ -287,12 +287,12 @@
 
     - name: Set Server Name
       copy:
-        dest: "/etc/apache2/sites-available/domain.conf"
+        dest: "/etc/apache2/sites-available/bennieo.conf"
         content: |
           <VirtualHost *:80>
               ServerAdmin contact@bennieo.me
               ServerName www.bennieo.me
-              ServerAlias miniapp.bennieo.com
+              ServerAlias bennieo.com
               DocumentRoot /var/www/bennieo/public
               <Directory /var/www/bennieo/public>
                   Options Indexes FollowSymLinks
@@ -327,7 +327,7 @@
 
     - name: enabling the New Config
       shell: |
-        a2ensite miniapp.conf
+        a2ensite bennieo.conf
         a2dissite 000-default.conf
         a2enmod rewrite
         service apache2 restart
