@@ -175,7 +175,7 @@
     - name: Create A Database User
       mysql_user:
         name: "root"
-        password: "grant"
+        password: "root"
         host_all: yes
         login_host: 167.99.94.237 
         check_implicit_admin: yes
@@ -185,9 +185,9 @@
     
     - name: Create A New Database 
       mysql_db:
-        name: "testdb"
+        name: "bennieodb"
         login_user: "root"
-        login_password: "grant"
+        login_password: "root"
         state: present
 
     - name: Set Php_Executable Variable To A Default If Not Defined.
