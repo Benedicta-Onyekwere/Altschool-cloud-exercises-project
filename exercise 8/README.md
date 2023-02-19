@@ -110,7 +110,7 @@ Which was a success as shown below;
 
 To write or create the Ansible-playbook in which the apache server will be set up, timezone set to Africa/lagos and an index.php file with its content as the main file on the server, i created a yaml file called test.yml,using the command:
 
-`nano test.yml`
+`nano test.yml'
 
  But before this i first set up an index.php file with it's content
  
